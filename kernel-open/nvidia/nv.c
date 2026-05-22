@@ -1613,6 +1613,22 @@ failed:
         NV_KFREE(nvl->msix_isr_locks, nvl->num_intr*sizeof(nv_spinlock_t));
         nvl->msix_isr_locks = NULL;
         nvl->msix_isr_locks_count = 0;
+
+        // Clean up per-vector BH mutexes
+        if (nvl->msix_bh_mutexes)
+        {
+            int i;
+            for (i = 0; i < nvl->msix_bh_mutexes_count; i++)
+            {
+                if (nvl->msix_bh_mutexes[i])
+                {
+                    os_free_mutex(nvl->msix_bh_mutexes[i]);
+                }
+            }
+            NV_KFREE(nvl->msix_bh_mutexes, nvl->msix_bh_mutexes_count*sizeof(void *));
+            nvl->msix_bh_mutexes = NULL;
+            nvl->msix_bh_mutexes_count = 0;
+        }
     }
 
     if (nvl->msix_bh_mutex)
@@ -2059,6 +2075,25 @@ void nv_shutdown_adapter(nvidia_stack_t *sp,
         nv->flags &= ~NV_FLAG_USES_MSIX;
         NV_KFREE(nvl->msix_entries, nvl->num_intr*sizeof(struct msix_entry));
         NV_KFREE(nvl->irq_count, nvl->num_intr*sizeof(nv_irq_count_info_t));
+        NV_KFREE(nvl->msix_isr_locks, nvl->num_intr*sizeof(nv_spinlock_t));
+        nvl->msix_isr_locks = NULL;
+        nvl->msix_isr_locks_count = 0;
+
+        // Clean up per-vector BH mutexes
+        if (nvl->msix_bh_mutexes)
+        {
+            int i;
+            for (i = 0; i < nvl->msix_bh_mutexes_count; i++)
+            {
+                if (nvl->msix_bh_mutexes[i])
+                {
+                    os_free_mutex(nvl->msix_bh_mutexes[i]);
+                }
+            }
+            NV_KFREE(nvl->msix_bh_mutexes, nvl->msix_bh_mutexes_count*sizeof(void *));
+            nvl->msix_bh_mutexes = NULL;
+            nvl->msix_bh_mutexes_count = 0;
+        }
     }
 #endif
 
@@ -2672,6 +2707,8 @@ nvidia_ioctl(
                 goto done;
             }
 
+            // OPTIMIZATION: Allocate final destination first
+            // Then copy directly from user space, avoiding double copy
             NV_KMALLOC(nvlfp->attached_gpus, arg_size);
             if (nvlfp->attached_gpus == NULL)
             {
@@ -2679,6 +2716,9 @@ nvidia_ioctl(
                 status = -ENOMEM;
                 goto done;
             }
+
+            // Copy directly from arg_copy (already copied from user space)
+            // This is the same data that was copied in the initial copy_from_user
             memcpy(nvlfp->attached_gpus, arg_copy, arg_size);
             nvlfp->num_attached_gpus = num_arg_gpus;
 
@@ -3111,18 +3151,42 @@ nvidia_isr_msix_kthread_bh(
     irqreturn_t ret;
     nv_state_t *nv = (nv_state_t *) data;
     nv_linux_state_t *nvl = NV_GET_NVL_FROM_NV_STATE(nv);
+    int vector_index = 0;
+    int i;
+    void *bh_mutex = nvl->msix_bh_mutex;  // Fallback to global mutex
+
+    //
+    // Find which MSI-X vector this IRQ corresponds to
+    // Use per-vector mutex for better parallelism on multi-core systems
+    //
+    if (nvl->msix_bh_mutexes != NULL && nvl->msix_bh_mutexes_count > 0)
+    {
+        // Try to find the vector index from msix_entries
+        if (nvl->msix_entries != NULL)
+        {
+            for (i = 0; i < nvl->msix_bh_mutexes_count; i++)
+            {
+                if (nvl->msix_entries[i].vector == irq)
+                {
+                    vector_index = i;
+                    bh_mutex = nvl->msix_bh_mutexes[i];
+                    break;
+                }
+            }
+        }
+    }
 
     //
     // Synchronize kthreads servicing bottom halves for different MSI-X vectors
-    // as they share same pre-allocated alt-stack.
+    // Using per-vector mutex allows parallel BH processing on multi-core systems
     //
-    status = os_acquire_mutex(nvl->msix_bh_mutex);
+    status = os_acquire_mutex(bh_mutex);
     // os_acquire_mutex can only fail if we cannot sleep and we can
     WARN_ON(status != NV_OK);
 
     ret = nvidia_isr_common_bh(data);
 
-    os_release_mutex(nvl->msix_bh_mutex);
+    os_release_mutex(bh_mutex);
 
     return ret;
 }

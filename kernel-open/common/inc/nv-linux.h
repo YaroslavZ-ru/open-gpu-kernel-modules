@@ -1312,7 +1312,12 @@ typedef struct nv_linux_state_s {
     nv_spinlock_t *msix_isr_locks;
     NvU32 msix_isr_locks_count;
 
-    /* Lock serializing bottom halves for different MSI-X vectors */
+    /* Per-vector mutexes for MSI-X bottom-half handlers */
+    /* Replaces single global msix_bh_mutex to allow parallel BH processing */
+    void **msix_bh_mutexes;
+    NvU32 msix_bh_mutexes_count;
+
+    /* Legacy: single global lock (kept for compatibility, not used if per-vector mutexes allocated) */
     void *msix_bh_mutex;
 
     struct msix_entry *msix_entries;

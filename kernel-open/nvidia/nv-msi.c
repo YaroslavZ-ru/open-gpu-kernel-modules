@@ -101,6 +101,27 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
         NV_SPIN_LOCK_INIT(&nvl->msix_isr_locks[i]);
     }
 
+    // Allocate per-vector mutexes for MSI-X bottom-half handlers
+    // This allows parallel BH processing instead of serializing through single global mutex
+    NV_KMALLOC(nvl->msix_bh_mutexes, sizeof(void *) * num_intr);
+    if (nvl->msix_bh_mutexes == NULL)
+    {
+        NV_DEV_PRINTF(NV_DBG_ERRORS, nv, "Failed to allocate MSI-X BH mutex array.\n");
+        goto failed;
+    }
+    nvl->msix_bh_mutexes_count = num_intr;
+
+    // Initialize each per-vector mutex
+    for (i = 0; i < num_intr; i++)
+    {
+        rc = os_alloc_mutex(&nvl->msix_bh_mutexes[i]);
+        if (rc != 0)
+        {
+            NV_DEV_PRINTF(NV_DBG_ERRORS, nv, "Failed to allocate MSI-X BH mutex %d.\n", i);
+            goto failed;
+        }
+    }
+
     NV_KMALLOC(nvl->msix_entries, sizeof(struct msix_entry) * num_intr);
     if (nvl->msix_entries == NULL)
     {
@@ -136,6 +157,20 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
 
 failed:
     nv->flags &= ~NV_FLAG_USES_MSIX;
+
+    if (nvl->msix_bh_mutexes)
+    {
+        for (i = 0; i < nvl->msix_bh_mutexes_count; i++)
+        {
+            if (nvl->msix_bh_mutexes[i])
+            {
+                os_free_mutex(nvl->msix_bh_mutexes[i]);
+            }
+        }
+        NV_KFREE(nvl->msix_bh_mutexes, sizeof(void *) * num_intr);
+        nvl->msix_bh_mutexes = NULL;
+        nvl->msix_bh_mutexes_count = 0;
+    }
 
     if (nvl->msix_isr_locks)
     {
