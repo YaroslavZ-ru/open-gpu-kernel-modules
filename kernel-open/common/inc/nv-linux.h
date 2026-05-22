@@ -1394,6 +1394,11 @@ typedef struct nv_linux_state_s {
     /* Max number of irq triggered and are getting tracked */
     NvU16 current_num_irq_tracked;
 
+    /* Cache for last IRQ lookup (temporal locality optimization)
+     * Most interrupts come from same vector, so cache last lookup result */
+    int last_irq_cached;
+    NvU16 last_irq_index_cached;
+
     NvBool is_forced_shutdown;
 
     struct nv_dma_device dma_dev;

@@ -123,6 +123,9 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
     else
     {
         nvl->current_num_irq_tracked = 0;
+        // Initialize IRQ cache for temporal locality optimization
+        nvl->last_irq_cached = -1;
+        nvl->last_irq_index_cached = 0;
     }
     rc = nv_pci_enable_msix(nvl, num_intr);
     if (rc != NV_OK)

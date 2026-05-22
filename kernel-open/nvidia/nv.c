@@ -3006,15 +3006,27 @@ nvidia_isr(
     {
         if (nvl->irq_count != NULL)
         {
-            for (index = 0; index < nvl->current_num_irq_tracked; index++)
+            // OPTIMIZATION: Check cache first (temporal locality)
+            // Most interrupts come from same vector, so cache hit is common
+            if (nvl->last_irq_cached == irq && nvl->last_irq_index_cached < nvl->current_num_irq_tracked)
             {
-                if (nvl->irq_count[index].irq == irq)
+                index = nvl->last_irq_index_cached;
+                found_irq = NV_TRUE;
+            }
+            else
+            {
+                // Cache miss: linear search (but typically only 1-2 iterations)
+                for (index = 0; index < nvl->current_num_irq_tracked; index++)
                 {
-                    found_irq = NV_TRUE;
-                    break;
+                    if (nvl->irq_count[index].irq == irq)
+                    {
+                        found_irq = NV_TRUE;
+                        // Update cache for next interrupt
+                        nvl->last_irq_cached = irq;
+                        nvl->last_irq_index_cached = index;
+                        break;
+                    }
                 }
-
-                found_irq = NV_FALSE;
             }
 
             if (!found_irq && nvl->current_num_irq_tracked < nvl->num_intr)
@@ -3023,6 +3035,9 @@ nvidia_isr(
                 nvl->irq_count[index].irq = irq;
                 nvl->current_num_irq_tracked++;
                 found_irq = NV_TRUE;
+                // Update cache for new IRQ
+                nvl->last_irq_cached = irq;
+                nvl->last_irq_index_cached = index;
             }
 
             if (found_irq)
