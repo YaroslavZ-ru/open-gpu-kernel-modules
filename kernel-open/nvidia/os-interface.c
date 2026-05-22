@@ -480,18 +480,24 @@ void *NV_API_CALL os_mem_copy(
      * When performing memcpy for memory mapped as device, memcpy_[to/from]io
      * must be used. WAR to check the source and destination to determine the
      * correct memcpy_io to use.
+     *
+     * OPTIMIZATION: Perform address checks only once and use a decision tree
+     * to avoid redundant is_vmalloc_addr() calls which are expensive.
      */
-    if (is_vmalloc_addr(dst) && !is_vmalloc_addr(src))
+    NvBool dst_is_vmalloc = is_vmalloc_addr(dst);
+    NvBool src_is_vmalloc = is_vmalloc_addr(src);
+
+    if (dst_is_vmalloc && !src_is_vmalloc)
     {
         memcpy_toio(dst, src, length);
         return dst;
     }
-    else if (!is_vmalloc_addr(dst) && is_vmalloc_addr(src))
+    else if (!dst_is_vmalloc && src_is_vmalloc)
     {
         memcpy_fromio(dst, src, length);
         return dst;
     }
-    else if (is_vmalloc_addr(dst) && is_vmalloc_addr(src))
+    else if (dst_is_vmalloc && src_is_vmalloc)
     {
         return os_mem_copy_custom(dst, src, length);
     }
