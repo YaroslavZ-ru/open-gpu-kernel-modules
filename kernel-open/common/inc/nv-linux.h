@@ -1306,8 +1306,11 @@ typedef struct nv_linux_state_s {
 
     NvU32 num_intr;
 
-    /* Lock serializing ISRs for different MSI-X vectors */
-    nv_spinlock_t msix_isr_lock;
+    /* Per-vector spinlocks for MSI-X ISRs (replaces single global lock) */
+    /* This eliminates serialization bottleneck when multiple MSI-X vectors
+     * fire simultaneously on different CPUs (common on Ryzen systems) */
+    nv_spinlock_t *msix_isr_locks;
+    NvU32 msix_isr_locks_count;
 
     /* Lock serializing bottom halves for different MSI-X vectors */
     void *msix_bh_mutex;

@@ -1610,6 +1610,9 @@ failed:
         pci_disable_msix(nvl->pci_dev);
         NV_KFREE(nvl->irq_count, nvl->num_intr*sizeof(nv_irq_count_info_t));
         NV_KFREE(nvl->msix_entries, nvl->num_intr*sizeof(struct msix_entry));
+        NV_KFREE(nvl->msix_isr_locks, nvl->num_intr*sizeof(nv_spinlock_t));
+        nvl->msix_isr_locks = NULL;
+        nvl->msix_isr_locks_count = 0;
     }
 
     if (nvl->msix_bh_mutex)
@@ -2917,19 +2920,39 @@ nvidia_isr_msix(
 {
     irqreturn_t ret;
     nv_linux_state_t *nvl = (void *) arg;
+    nv_state_t *nv = NV_STATE_PTR(nvl);
+    int vector_index = 0;
+    int i;
 
-    // nvidia_isr_msix() is called for each of the MSI-X vectors and they can
-    // run in parallel on different CPUs (cores), but this is not currently
-    // supported by nvidia_isr() and its children. As a big hammer fix just
-    // spinlock around the nvidia_isr() call to serialize them.
-    //
-    // At this point interrupts are disabled on the CPU running our ISR (see
-    // comments for nv_default_irq_flags()) so a plain spinlock is enough.
-    NV_SPIN_LOCK(&nvl->msix_isr_lock);
+    // Find which MSI-X vector this IRQ corresponds to
+    // Use per-vector spinlock instead of global lock for better parallelism
+    // on multi-core systems (especially Ryzen with 12+ cores)
+    if (nvl->msix_isr_locks != NULL && nvl->msix_isr_locks_count > 0)
+    {
+        // Try to find the vector index from msix_entries
+        if (nvl->msix_entries != NULL)
+        {
+            for (i = 0; i < nvl->msix_isr_locks_count; i++)
+            {
+                if (nvl->msix_entries[i].vector == irq)
+                {
+                    vector_index = i;
+                    break;
+                }
+            }
+        }
 
-    ret = nvidia_isr(irq, arg);
-
-    NV_SPIN_UNLOCK(&nvl->msix_isr_lock);
+        // Use per-vector spinlock for this specific IRQ
+        // This allows multiple MSI-X vectors to be processed in parallel
+        NV_SPIN_LOCK(&nvl->msix_isr_locks[vector_index]);
+        ret = nvidia_isr(irq, arg);
+        NV_SPIN_UNLOCK(&nvl->msix_isr_locks[vector_index]);
+    }
+    else
+    {
+        // Fallback if per-vector locks not initialized (shouldn't happen)
+        ret = nvidia_isr(irq, arg);
+    }
 
     return ret;
 }

@@ -72,8 +72,6 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
     int rc = 0;
     int i;
 
-    NV_SPIN_LOCK_INIT(&nvl->msix_isr_lock);
-
     rc = os_alloc_mutex(&nvl->msix_bh_mutex);
     if (rc != 0)
         goto failed;
@@ -85,6 +83,22 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
         NV_DEV_PRINTF(NV_DBG_INFO, nv, "Reducing MSI-X count from %d to the "
                                "driver-supported maximum %d.\n", num_intr, NV_RM_MAX_MSIX_LINES);
         num_intr = NV_RM_MAX_MSIX_LINES;
+    }
+
+    // Allocate per-vector spinlocks for MSI-X ISRs
+    // This eliminates serialization bottleneck on multi-core systems
+    NV_KMALLOC(nvl->msix_isr_locks, sizeof(nv_spinlock_t) * num_intr);
+    if (nvl->msix_isr_locks == NULL)
+    {
+        NV_DEV_PRINTF(NV_DBG_ERRORS, nv, "Failed to allocate MSI-X ISR locks.\n");
+        goto failed;
+    }
+    nvl->msix_isr_locks_count = num_intr;
+    
+    // Initialize each per-vector spinlock
+    for (i = 0; i < num_intr; i++)
+    {
+        NV_SPIN_LOCK_INIT(&nvl->msix_isr_locks[i]);
     }
 
     NV_KMALLOC(nvl->msix_entries, sizeof(struct msix_entry) * num_intr);
@@ -119,6 +133,13 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
 
 failed:
     nv->flags &= ~NV_FLAG_USES_MSIX;
+
+    if (nvl->msix_isr_locks)
+    {
+        NV_KFREE(nvl->msix_isr_locks, sizeof(nv_spinlock_t) * num_intr);
+        nvl->msix_isr_locks = NULL;
+        nvl->msix_isr_locks_count = 0;
+    }
 
     if (nvl->msix_entries)
     {
