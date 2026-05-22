@@ -15,10 +15,6 @@
 #include "g_deferred_api_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__8ea933 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_DeferredApiObject;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

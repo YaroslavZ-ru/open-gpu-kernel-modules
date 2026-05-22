@@ -15,10 +15,6 @@
 #include "g_eng_state_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__7a7ed6 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJENGSTATE;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

@@ -15,10 +15,6 @@
 #include "g_gpu_vaspace_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__ba5875 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJGVASPACE;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJVASPACE;

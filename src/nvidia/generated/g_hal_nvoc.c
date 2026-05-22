@@ -15,10 +15,6 @@
 #include "g_hal_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__e803b6 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJHAL;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

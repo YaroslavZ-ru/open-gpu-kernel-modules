@@ -15,10 +15,6 @@
 #include "g_profiler_v1_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__65b4c7 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Profiler;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

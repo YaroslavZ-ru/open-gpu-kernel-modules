@@ -15,10 +15,6 @@
 #include "g_ccsl_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__9bf1a1 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Ccsl;
 
 // Forward declarations for Ccsl

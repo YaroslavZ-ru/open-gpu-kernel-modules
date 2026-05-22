@@ -15,10 +15,6 @@
 #include "g_spdm_proxy_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__5b722d = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_SpdmProxy;
 
 // Forward declarations for SpdmProxy

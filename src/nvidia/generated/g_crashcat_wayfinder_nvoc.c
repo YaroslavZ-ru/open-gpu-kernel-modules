@@ -24,10 +24,6 @@ void __nvoc_init_halspec_CrashCatWayfinderHal(CrashCatWayfinderHal *pCrashCatWay
 }
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__085e32 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_CrashCatWayfinder;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

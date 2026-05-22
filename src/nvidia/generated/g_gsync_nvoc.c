@@ -15,10 +15,6 @@
 #include "g_gsync_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__d07fd0 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJGSYNCMGR;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

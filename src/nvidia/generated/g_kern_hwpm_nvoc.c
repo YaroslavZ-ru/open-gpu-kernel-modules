@@ -15,10 +15,6 @@
 #include "g_kern_hwpm_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__c8c00f = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelHwpm;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJENGSTATE;

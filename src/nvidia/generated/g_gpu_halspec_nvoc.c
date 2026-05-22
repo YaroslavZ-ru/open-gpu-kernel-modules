@@ -15,10 +15,6 @@
 #include "g_gpu_halspec_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__34a6d6 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RmHalspecOwner;
 
 // Forward declarations for RmHalspecOwner
@@ -129,10 +125,6 @@ void __nvoc_init__RmHalspecOwner(RmHalspecOwner *pThis,
     __nvoc_init_funcTable_RmHalspecOwner(pThis);
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__74bc71 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_GpuHalspecOwner;
 

@@ -15,10 +15,6 @@
 #include "g_resource_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__8ef259 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RmResourceCommon;
 
 // Forward declarations for RmResourceCommon
@@ -126,10 +122,6 @@ void __nvoc_init__RmResourceCommon(RmResourceCommon *pThis) {
     __nvoc_init_funcTable_RmResourceCommon(pThis);
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__03610d = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RmResource;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

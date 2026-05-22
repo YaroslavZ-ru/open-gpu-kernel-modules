@@ -15,10 +15,6 @@
 #include "g_rs_server_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__830542 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsShared;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 
@@ -229,10 +225,6 @@ NV_STATUS __nvoc_objCreateDynamic_RsShared(RsShared **__nvoc_ppThis, Dynamic *__
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__830d90 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsSession;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

@@ -15,10 +15,6 @@
 #include "g_sec2_context_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__4c3439 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Sec2Context;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

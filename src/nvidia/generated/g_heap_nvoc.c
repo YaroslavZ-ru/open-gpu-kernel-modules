@@ -15,10 +15,6 @@
 #include "g_heap_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__556e9a = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Heap;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

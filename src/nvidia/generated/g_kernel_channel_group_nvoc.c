@@ -15,10 +15,6 @@
 #include "g_kernel_channel_group_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__ec6de1 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelChannelGroup;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsShared;

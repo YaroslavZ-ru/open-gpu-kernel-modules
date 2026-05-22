@@ -15,10 +15,6 @@
 #include "g_ce_utils_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__8b8bae = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_CeUtils;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 
@@ -232,10 +228,6 @@ NV_STATUS __nvoc_objCreateDynamic_CeUtils(CeUtils **__nvoc_ppThis, Dynamic *__nv
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__2eb528 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_CeUtilsApi;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

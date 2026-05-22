@@ -15,10 +15,6 @@
 #include "g_event_api_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__d5f150 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_NotifShare;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsShared;
@@ -236,10 +232,6 @@ NV_STATUS __nvoc_objCreateDynamic_NotifShare(NotifShare **__nvoc_ppThis, Dynamic
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__854293 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_EventApi;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
@@ -683,10 +675,6 @@ NV_STATUS __nvoc_objCreateDynamic_EventApi(EventApi **__nvoc_ppThis, Dynamic *__
 }
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__f8f965 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_INotifier;
 
 // Forward declarations for INotifier
@@ -810,10 +798,6 @@ void __nvoc_init__INotifier(INotifier *pThis) {
     __nvoc_init_funcTable_INotifier(pThis);
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__a8683b = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Notifier;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_INotifier;

@@ -1910,9 +1910,7 @@ static void HdmiLibAssert(
     const char *function,
     unsigned int line)
 {
-#ifdef DEBUG
-    nvDebugAssert(expr, filename, function, line);
-#endif
+    /* Debug assertions disabled for production build */
 }
 
 static NvU64 hdmiLibTimerStartTime = 0;

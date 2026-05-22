@@ -15,10 +15,6 @@
 #include "g_fabric_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__0ac791 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Fabric;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

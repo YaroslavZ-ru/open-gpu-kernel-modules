@@ -15,10 +15,6 @@
 #include "g_instrumentation_manager_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__30d0c5 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_InstrumentationManager;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

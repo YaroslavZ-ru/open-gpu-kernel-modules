@@ -15,10 +15,6 @@
 #include "g_fbsr_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__a30fe6 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJFBSR;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

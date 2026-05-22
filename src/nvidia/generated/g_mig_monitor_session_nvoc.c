@@ -15,10 +15,6 @@
 #include "g_mig_monitor_session_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__29e15c = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_MIGMonitorSession;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

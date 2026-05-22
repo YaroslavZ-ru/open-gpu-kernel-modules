@@ -15,10 +15,6 @@
 #include "g_nv_debug_dump_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__7e80a2 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_NvDebugDump;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJENGSTATE;

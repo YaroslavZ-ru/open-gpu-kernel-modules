@@ -142,9 +142,7 @@ done:
     return status;
 }
 
-#ifdef DEBUG
-int g_BreakOnResume = 0;
-#endif
+/* Debug breakpoint on resume disabled for production build */
 
 // XXX Needs to be further cleaned up. No new code should be placed in this
 // routine. Please use the per-engine StateLoad() and StateUnload() routines
@@ -161,20 +159,6 @@ gpuPowerManagementResume(OBJGPU *pGpu, NvU32 oldLevel, NvU32 flags)
     {
         return NV_OK;
     }
-
-#ifdef DEBUG
-    //
-    // This is useful for windbg debugging as it frequently doesn't reconnect to the
-    // target system until after the majority of the resume code has been ran.
-    // Placing an int 3 at the entrypoint to S/R resume code causes the target to
-    // halt until the debugger reconnects and the user is then able to place
-    // breakpoints / step through code.
-    //
-    if (g_BreakOnResume)
-    {
-        DBG_BREAKPOINT();
-    }
-#endif
 
     if (pCl != NULL)
     {

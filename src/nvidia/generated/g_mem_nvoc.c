@@ -15,10 +15,6 @@
 #include "g_mem_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__4789f2 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Memory;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

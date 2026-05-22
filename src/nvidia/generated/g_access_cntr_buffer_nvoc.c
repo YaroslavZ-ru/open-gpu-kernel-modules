@@ -15,10 +15,6 @@
 #include "g_access_cntr_buffer_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__1f0074 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_AccessCounterBuffer;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

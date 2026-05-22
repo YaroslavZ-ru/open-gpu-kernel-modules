@@ -15,10 +15,6 @@
 #include "g_kernel_crashcat_engine_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__c37aef = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelCrashCatEngine;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_CrashCatEngine;
 

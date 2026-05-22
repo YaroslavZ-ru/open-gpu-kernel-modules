@@ -15,10 +15,6 @@
 #include "g_client_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__21d236 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_UserInfo;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsShared;
@@ -236,10 +232,6 @@ NV_STATUS __nvoc_objCreateDynamic_UserInfo(UserInfo **__nvoc_ppThis, Dynamic *__
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__b23d83 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RmClient;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

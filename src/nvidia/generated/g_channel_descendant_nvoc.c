@@ -15,10 +15,6 @@
 #include "g_channel_descendant_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__43d7c4 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_ChannelDescendant;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

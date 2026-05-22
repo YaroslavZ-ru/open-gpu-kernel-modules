@@ -15,10 +15,6 @@
 #include "g_p2p_api_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__3982b7 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_P2PApi;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

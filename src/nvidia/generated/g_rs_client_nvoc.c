@@ -15,10 +15,6 @@
 #include "g_rs_client_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__8f87e5 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsClient;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 
@@ -244,10 +240,6 @@ NV_STATUS __nvoc_objCreateDynamic_RsClient(RsClient **__nvoc_ppThis, Dynamic *__
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__083442 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsClientResource;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

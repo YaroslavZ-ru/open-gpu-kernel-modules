@@ -15,10 +15,6 @@
 #include "g_mem_fabric_import_v2_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__f96871 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_MemoryFabricImportV2;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

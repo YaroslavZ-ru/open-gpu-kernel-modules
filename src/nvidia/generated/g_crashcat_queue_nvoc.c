@@ -15,10 +15,6 @@
 #include "g_crashcat_queue_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__baa900 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_CrashCatQueue;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

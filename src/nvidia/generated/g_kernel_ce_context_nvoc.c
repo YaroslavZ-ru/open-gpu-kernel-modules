@@ -15,10 +15,6 @@
 #include "g_kernel_ce_context_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__2d0ee9 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelCeContext;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

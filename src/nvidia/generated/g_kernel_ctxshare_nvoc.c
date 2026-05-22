@@ -15,10 +15,6 @@
 #include "g_kernel_ctxshare_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__5ae2fe = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelCtxShare;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsShared;
@@ -255,10 +251,6 @@ NV_STATUS __nvoc_objCreateDynamic_KernelCtxShare(KernelCtxShare **__nvoc_ppThis,
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__1f9af1 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelCtxShareApi;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

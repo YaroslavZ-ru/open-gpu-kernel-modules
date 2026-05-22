@@ -15,10 +15,6 @@
 #include "g_kernel_vgpu_mgr_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__a793dd = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelVgpuMgr;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

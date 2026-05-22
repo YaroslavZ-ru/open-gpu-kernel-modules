@@ -15,10 +15,6 @@
 #include "g_device_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__e0ac20 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Device;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

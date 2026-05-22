@@ -15,10 +15,6 @@
 #include "g_rg_line_callback_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__a3ff1c = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RgLineCallback;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

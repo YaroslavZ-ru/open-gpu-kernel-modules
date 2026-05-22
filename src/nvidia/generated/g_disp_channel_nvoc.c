@@ -15,10 +15,6 @@
 #include "g_disp_channel_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__bd2ff3 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_DispChannel;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;
@@ -618,10 +614,6 @@ NV_STATUS __nvoc_objCreateDynamic_DispChannel(DispChannel **__nvoc_ppThis, Dynam
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__10dec3 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_DispChannelPio;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
@@ -1272,10 +1264,6 @@ NV_STATUS __nvoc_objCreateDynamic_DispChannelPio(DispChannelPio **__nvoc_ppThis,
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__fe3d2e = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_DispChannelDma;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

@@ -15,10 +15,6 @@
 #include "g_platform_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__b543ae = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJPFM;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

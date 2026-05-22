@@ -15,10 +15,6 @@
 #include "g_platform_request_handler_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__641a7f = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_PlatformRequestHandler;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

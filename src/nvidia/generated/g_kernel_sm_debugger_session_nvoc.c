@@ -15,10 +15,6 @@
 #include "g_kernel_sm_debugger_session_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__48fa7d = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RmDebuggerSession;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsShared;
@@ -253,10 +249,6 @@ NV_STATUS __nvoc_objCreateDynamic_RmDebuggerSession(RmDebuggerSession **__nvoc_p
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__4adc81 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelSMDebuggerSession;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

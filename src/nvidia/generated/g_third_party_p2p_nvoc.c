@@ -15,10 +15,6 @@
 #include "g_third_party_p2p_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__3e3a6a = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_P2PTokenShare;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsShared;
@@ -236,10 +232,6 @@ NV_STATUS __nvoc_objCreateDynamic_P2PTokenShare(P2PTokenShare **__nvoc_ppThis, D
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__34d08b = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_ThirdPartyP2P;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

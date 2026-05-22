@@ -15,10 +15,6 @@
 #include "g_disp_objs_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__e9980c = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_DisplayApi;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;
@@ -555,10 +551,6 @@ NV_STATUS __nvoc_objCreateDynamic_DisplayApi(DisplayApi **__nvoc_ppThis, Dynamic
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__999839 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_DispObject;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
@@ -1139,10 +1131,6 @@ NV_STATUS __nvoc_objCreateDynamic_DispObject(DispObject **__nvoc_ppThis, Dynamic
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__36aa0b = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_NvDispApi;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
@@ -2173,10 +2161,6 @@ NV_STATUS __nvoc_objCreateDynamic_NvDispApi(NvDispApi **__nvoc_ppThis, Dynamic *
 }
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__6aa5e2 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_DispSwObj;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;
@@ -2816,10 +2800,6 @@ NV_STATUS __nvoc_objCreateDynamic_DispSwObj(DispSwObj **__nvoc_ppThis, Dynamic *
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__41f4f2 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_DispCommon;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

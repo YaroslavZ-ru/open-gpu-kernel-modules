@@ -242,10 +242,6 @@ _pmaRegmapScanNumaUnevictable
     NvU64    endMapIdx   = PAGE_MAPIDX(frameEnd);
     NvU64    endBitIdx   = PAGE_BITIDX(frameEnd);
 
-#ifdef DEBUG_VERBOSE
-    NvU64   *pinBitmap = pRegmap->map[MAP_IDX_ALLOC_PIN];
-#endif
-
     for (mapIter = endMapIdx; mapIter >= startMapIdx; mapIter--)
     {
         NvU64    mask = NV_U64_MAX;
@@ -260,11 +256,6 @@ _pmaRegmapScanNumaUnevictable
             mask = (mask & ~(MAKE_BITMASK(startBitIdx) - 1));
         }
 
-#ifdef DEBUG_VERBOSE
-
-        NV_PRINTF(LEVEL_INFO, "mapIter %llx frame %llx mask %llx unpinbitmap %llx pinbitmap %llx evictbitmap %llx",
-                 mapIter, (mapIter << FRAME_TO_U64_SHIFT), mask, unpinBitmap[mapIter], pinBitmap[mapIter], evictBitmap[mapIter]);
-#endif
         // start from the end
         if ((unpinBitmap[mapIter] & mask) == mask)
             continue; // go to previous bits
@@ -279,9 +270,6 @@ _pmaRegmapScanNumaUnevictable
                 unevictableFrameIndex = (mapIter << FRAME_TO_U64_SHIFT) +  (FRAME_TO_U64_SIZE - 1);
             break;
         }
-#ifdef DEBUG_VERBOSE
-        NV_PRINTF(LEVEL_INFO, "Check leading zero of %llx", ~(unpinBitmap[mapIter] & mask));
-#endif
 
         unevictableIndex = FRAME_TO_U64_SIZE - portUtilCountLeadingZeros64((~unpinBitmap[mapIter]) & mask) - 1;
         unevictableFrameIndex = (mapIter << FRAME_TO_U64_SHIFT) + unevictableIndex;
@@ -290,15 +278,8 @@ _pmaRegmapScanNumaUnevictable
 
     if (unevictableFrameIndex == -1)
     {
-#ifdef DEBUG_VERBOSE
-        NV_PRINTF(LEVEL_INFO, "Evictable range found between frameBegin %llx and frameEnd %llx", frameBegin, frameEnd);
-#endif
-
         if (pRegmap->frameEvictionsInProcess && ((unevictableFrameIndex = _checkOne(evictBitmap, frameBegin, frameEnd)) != -1))
         {
-#ifdef DEBUG_VERBOSE
-            NV_PRINTF(LEVEL_INFO, "The allocation range is already being evicted frameBegin %llx and frameEnd %llx", frameBegin, frameEnd);
-#endif
             return unevictableFrameIndex;
         }
     }

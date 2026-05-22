@@ -15,10 +15,6 @@
 #include "g_fabric_vaspace_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__8c8f3d = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_FABRIC_VASPACE;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJVASPACE;

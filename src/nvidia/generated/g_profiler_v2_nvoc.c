@@ -15,10 +15,6 @@
 #include "g_profiler_v2_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__4976fc = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_ProfilerBase;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;
@@ -1173,10 +1169,6 @@ NV_STATUS __nvoc_objCreateDynamic_ProfilerBase(ProfilerBase **__nvoc_ppThis, Dyn
 }
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__e99229 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_ProfilerCtx;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;
@@ -1827,10 +1819,6 @@ NV_STATUS __nvoc_objCreateDynamic_ProfilerCtx(ProfilerCtx **__nvoc_ppThis, Dynam
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__54d077 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_ProfilerDev;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

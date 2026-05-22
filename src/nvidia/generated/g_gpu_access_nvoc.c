@@ -15,10 +15,6 @@
 #include "g_gpu_access_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__40549c = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_IoAperture;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RegisterAperture;
@@ -321,10 +317,6 @@ NV_STATUS __nvoc_objCreateDynamic_IoAperture(IoAperture **__nvoc_ppThis, Dynamic
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__6d0f88 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_SwBcAperture;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

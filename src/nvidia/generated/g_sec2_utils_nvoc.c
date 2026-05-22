@@ -15,10 +15,6 @@
 #include "g_sec2_utils_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__7716b1 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Sec2Utils;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

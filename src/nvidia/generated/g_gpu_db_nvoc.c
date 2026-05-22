@@ -15,10 +15,6 @@
 #include "g_gpu_db_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__cdd250 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_GpuDb;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

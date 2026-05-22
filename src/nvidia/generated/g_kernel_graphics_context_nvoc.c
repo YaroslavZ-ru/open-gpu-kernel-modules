@@ -15,10 +15,6 @@
 #include "g_kernel_graphics_context_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__7ead09 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelGraphicsContext;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;
@@ -687,10 +683,6 @@ NV_STATUS __nvoc_objCreateDynamic_KernelGraphicsContext(KernelGraphicsContext **
     return __nvoc_status;
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__e7abeb = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelGraphicsContextShared;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;

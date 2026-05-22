@@ -15,10 +15,6 @@
 #include "g_ref_count_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__f89281 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJREFCNT;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

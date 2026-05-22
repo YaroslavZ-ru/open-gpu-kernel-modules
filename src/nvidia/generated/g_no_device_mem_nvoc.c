@@ -15,10 +15,6 @@
 #include "g_no_device_mem_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__6c0832 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_NoDeviceMemory;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_RsResource;

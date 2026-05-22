@@ -113,20 +113,7 @@ poolListPrint
     PoolNodeList *pList
 )
 {
-    NvU32            length;
-    PoolNodeListIter it;
-
-    length = listCount(pList);
-    NV_PRINTF(LEVEL_NOTICE, "Length = %d\n", length);
-
-    it = listIterAll(pList);
-    while (listIterNext(&it))
-    {
-        NV_PRINTF_EX(POOLALLOC, LEVEL_NOTICE,
-                     "=> [pageAddr: 0x%llx, bitmap: 0x%llx]",
-                      it.pValue->pageAddr, it.pValue->bitmap);
-    }
-    NV_PRINTF_EX(POOLALLOC, LEVEL_NOTICE, "\n");
+    /* Debug printing disabled for production build */
 }
 #endif // defined(DEBUG_VERBOSE)
 
@@ -197,19 +184,7 @@ poolAllocPrint
     POOLALLOC *pPool
 )
 {
-#if defined(DEBUG_VERBOSE)
-    NV_PRINTF(LEVEL_NOTICE, "upstreamPageSize = %lldKB, allocPageSize = %lld%s\n",
-              (pPool->upstreamPageSize >> 10),
-              (pPool->allocPageSize >> 10) ? pPool->allocPageSize >> 10 :
-                                             pPool->allocPageSize,
-              (pPool->allocPageSize >> 10) ? "KB" : "B");
-    NV_PRINTF_EX(POOLALLOC, LEVEL_NOTICE, "freeList => ");
-    poolListPrint(&(pPool->freeList));
-    NV_PRINTF_EX(POOLALLOC, LEVEL_NOTICE, "partialList => ");
-    poolListPrint(&(pPool->partialList));
-    NV_PRINTF_EX(POOLALLOC, LEVEL_NOTICE, "fullList => ");
-    poolListPrint(&(pPool->fullList));
-#endif // defined(DEBUG_VERBOSE)
+    /* Debug printing disabled for production build */
 }
 
 
@@ -507,10 +482,6 @@ poolFree
 
     freeIdx = (NvU32)((address - baseAddr) / (pPool->allocPageSize));
     _setBitmap(&(pNode->bitmap), freeIdx);
-
-#if defined(DEBUG_VERBOSE)
-    poolAllocPrint(pPool);
-#endif // defined(DEBUG_VERBOSE)
 
     // node was in full list and needs to move out of full list
     if ((countZeros(pNode->bitmap) + 1) == pPool->ratio)

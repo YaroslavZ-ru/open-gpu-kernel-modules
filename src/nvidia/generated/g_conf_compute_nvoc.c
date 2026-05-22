@@ -15,10 +15,6 @@
 #include "g_conf_compute_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__9798cc = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_ConfidentialCompute;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJENGSTATE;

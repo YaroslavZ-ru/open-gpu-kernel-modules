@@ -15,10 +15,6 @@
 #include "g_kern_mem_sys_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__7faff1 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelMemorySystem;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJENGSTATE;

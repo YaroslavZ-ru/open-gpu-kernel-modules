@@ -15,10 +15,6 @@
 #include "g_kernel_falcon_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__b6b1af = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelFalcon;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_CrashCatEngine;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_KernelCrashCatEngine;
@@ -996,10 +992,6 @@ void __nvoc_init__KernelFalcon(KernelFalcon *pThis, GpuHalspecOwner *pGpuhalspec
     __nvoc_init_funcTable_KernelFalcon(pThis, pGpuhalspecowner, pRmhalspecowner);
 }
 
-
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__abcf08 = 1;
-#endif
 
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_GenericKernelFalcon;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_CrashCatEngine;

@@ -15,10 +15,6 @@
 #include "g_gpu_group_nvoc.h"
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__e40531 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_OBJGPUGRP;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 

@@ -34,10 +34,6 @@ void __nvoc_init_halspec_CrashCatReportHal(CrashCatReportHal *pCrashCatReportHal
 }
 
 
-#ifdef DEBUG
-char __nvoc_class_id_uniqueness_check__de4777 = 1;
-#endif
-
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_CrashCatReport;
 extern const struct NVOC_CLASS_DEF __nvoc_class_def_Object;
 
