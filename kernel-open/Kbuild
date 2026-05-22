@@ -137,10 +137,6 @@ ifneq ($(wildcard /proc/sgi_uv),)
  ccflags-y += -DNV_CONFIG_X86_UV
 endif
 
-ifdef VGX_FORCE_VFIO_PCI_CORE
- ccflags-y += -DNV_VGPU_FORCE_VFIO_PCI_CORE
-endif
-
 WARNINGS_AS_ERRORS ?=
 ifeq ($(WARNINGS_AS_ERRORS),1)
  ccflags-y += -Werror

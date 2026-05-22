@@ -42,10 +42,6 @@
 #include "nv_uvm_interface.h"
 #endif
 
-#if defined(NV_VGPU_KVM_BUILD)
-#include "nv-vgpu-vfio-interface.h"
-#endif
-
 #include "nvlink_proto.h"
 #include "nvlink_caps.h"
 

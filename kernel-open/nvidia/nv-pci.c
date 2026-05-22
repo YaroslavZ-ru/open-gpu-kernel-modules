@@ -127,7 +127,8 @@ done:
 static NvBool nv_treat_missing_irq_as_error(void)
 {
 #if defined(NV_LINUX_PCIE_MSI_SUPPORTED)
-    return (nv_get_hypervisor_type() != OS_HYPERVISOR_HYPERV);
+    // Bare-metal systems always treat missing IRQ as error
+    return NV_TRUE;
 #else
     return NV_TRUE;
 #endif
@@ -464,12 +465,9 @@ nv_init_coherent_link_info
         /*
          * This implies that the DSD key for PXM start and count is present
          * while the one for Physical Address (PA) is absent.
+         * Bare-metal systems fail in this case.
          */
-        if (nv_get_hypervisor_type() == OS_HYPERVISOR_UNKNOWN)
-        {
-            /* Fail for the baremetal case */
-            goto failed;
-        }
+        goto failed;
         
         /*
          * For the virtualization usecase on SHH, the coherent GPU memory
@@ -1665,11 +1663,8 @@ static void nv_init_dynamic_power_management
 
     nv_get_pci_sysfs_config(pci_dev, nvl);
 
-    if (nv_get_hypervisor_type() != OS_HYPERVISOR_UNKNOWN)
-    {
-        pr3_acpi_method_present = nv_acpi_power_resource_method_present(pci_dev);
-    }
-    else if (pci_dev->bus && pci_dev->bus->self)
+    // Bare-metal system: check ACPI power resource on parent bus
+    if (pci_dev->bus && pci_dev->bus->self)
     {
         pr3_acpi_method_present = nv_acpi_power_resource_method_present(pci_dev->bus->self);
     }
