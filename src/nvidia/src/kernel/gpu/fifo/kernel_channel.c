@@ -58,10 +58,6 @@
 #include "class/cla06fsw.h" // KEPLER_CHANNEL_GPFIFO_A
 #include "class/cla16f.h"   // KEPLER_CHANNEL_GPFIFO_B
 #include "class/cla16fsw.h" // KEPLER_CHANNEL_GPFIFO_B
-#include "class/clb06f.h"   // MAXWELL_CHANNEL_GPFIFO_A
-#include "class/clb06fsw.h" // MAXWELL_CHANNEL_GPFIFO_A
-#include "class/clc06f.h"   // PASCAL_CHANNEL_GPFIFO_A
-#include "class/clc06fsw.h" // PASCAL_CHANNEL_GPFIFO_A
 #include "class/clc36f.h"   // VOLTA_CHANNEL_GPFIFO_A
 #include "class/clc36fsw.h" // VOLTA_CHANNEL_GPFIFO_A
 #include "class/clc46f.h"   // TURING_CHANNEL_GPFIFO_A
@@ -1440,20 +1436,6 @@ CliGetChannelClassInfo
         {
             pClassInfo->notifiersMaxCount  = NVA16F_NOTIFIERS_MAXCOUNT;
             pClassInfo->rcNotifierIndex    = NVA16F_NOTIFIERS_RC;
-            pClassInfo->classType          = CHANNEL_CLASS_TYPE_GPFIFO;
-            break;
-        }
-        case MAXWELL_CHANNEL_GPFIFO_A:
-        {
-            pClassInfo->notifiersMaxCount  = NVB06F_NOTIFIERS_MAXCOUNT;
-            pClassInfo->rcNotifierIndex    = NVB06F_NOTIFIERS_RC;
-            pClassInfo->classType          = CHANNEL_CLASS_TYPE_GPFIFO;
-            break;
-        }
-        case PASCAL_CHANNEL_GPFIFO_A:
-        {
-            pClassInfo->notifiersMaxCount  = NVC06F_NOTIFIERS_MAXCOUNT;
-            pClassInfo->rcNotifierIndex    = NVC06F_NOTIFIERS_RC;
             pClassInfo->classType          = CHANNEL_CLASS_TYPE_GPFIFO;
             break;
         }

@@ -53,8 +53,6 @@
 #include "class/cla06f.h" // KEPLER_CHANNEL_GPFIFO_A
 #include "class/cla06fsubch.h"
 #include "class/cla16f.h" // KEPLER_CHANNEL_GPFIFO_B
-#include "class/clb06f.h" // MAXWELL_CHANNEL_GPFIFO_A
-#include "class/clc06f.h" // PASCAL_CHANNEL_GPFIFO_A
 #include "class/clc36f.h" // VOLTA_CHANNEL_GPFIFO_A
 #include "class/clc46f.h" // TURING_CHANNEL_GPFIFO_A
 #include "class/clc56f.h" // AMPERE_CHANNEL_GPFIFO_A
@@ -664,8 +662,6 @@ krcWatchdogInit_IMPL
         } gpfifoMapping[] = {
               {KEPLER_CHANNEL_GPFIFO_B,  sizeof(NvA16FControl)}
             , {KEPLER_CHANNEL_GPFIFO_A,  sizeof(NvA06FControl)}
-            , {MAXWELL_CHANNEL_GPFIFO_A, sizeof(Nvb06FControl)}
-            , {PASCAL_CHANNEL_GPFIFO_A,  sizeof(Nvc06fControl)}
             , {VOLTA_CHANNEL_GPFIFO_A,   sizeof(Nvc36fControl)}
             , {TURING_CHANNEL_GPFIFO_A,  sizeof(Nvc46fControl)}
             , {AMPERE_CHANNEL_GPFIFO_A,  sizeof(Nvc56fControl)}

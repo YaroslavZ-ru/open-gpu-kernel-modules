@@ -641,8 +641,6 @@ static NV_STATUS finnSerializeRoot_FINN_RM_API(NvU64 interface, NvU64 message, c
             return finnSerializeInterface_FINN_NV40_I2C_I2C(message, api, bp, seri_up);
         case FINN_INTERFACE_ID(FINN_GT200_DEBUGGER_DEBUG):
             return finnSerializeInterface_FINN_GT200_DEBUGGER_DEBUG(message, api, bp, seri_up);
-        case FINN_INTERFACE_ID(FINN_MAXWELL_CHANNEL_GPFIFO_A_GPFIFO):
-            return finnSerializeInterface_FINN_MAXWELL_CHANNEL_GPFIFO_A_GPFIFO(message, api, bp, seri_up);
 
         // Everything else is unsupported.
         default:
@@ -842,8 +840,6 @@ NvU64 FinnRmApiGetUnserializedSize(NvU64 interface, NvU64 message)
             return finnUnserializedInterfaceSize_FINN_NV40_I2C_I2C(message);
         case FINN_INTERFACE_ID(FINN_GT200_DEBUGGER_DEBUG):
             return finnUnserializedInterfaceSize_FINN_GT200_DEBUGGER_DEBUG(message);
-        case FINN_INTERFACE_ID(FINN_MAXWELL_CHANNEL_GPFIFO_A_GPFIFO):
-            return finnUnserializedInterfaceSize_FINN_MAXWELL_CHANNEL_GPFIFO_A_GPFIFO(message);
 
         // Zero indicates an unsupported interface (or message).
         default:
