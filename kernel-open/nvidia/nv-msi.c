@@ -87,7 +87,8 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
 
     // Allocate per-vector spinlocks for MSI-X ISRs
     // This eliminates serialization bottleneck on multi-core systems
-    NV_KMALLOC(nvl->msix_isr_locks, sizeof(nv_spinlock_t) * num_intr);
+    // Use NUMA-aware allocation for GPU-local memory
+    NV_KMALLOC_NUMA(nvl->msix_isr_locks, sizeof(nv_spinlock_t) * num_intr, nvl->numa_info.node_id);
     if (nvl->msix_isr_locks == NULL)
     {
         NV_DEV_PRINTF(NV_DBG_ERRORS, nv, "Failed to allocate MSI-X ISR locks.\n");
@@ -103,7 +104,8 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
 
     // Allocate per-vector mutexes for MSI-X bottom-half handlers
     // This allows parallel BH processing instead of serializing through single global mutex
-    NV_KMALLOC(nvl->msix_bh_mutexes, sizeof(void *) * num_intr);
+    // Use NUMA-aware allocation for GPU-local memory
+    NV_KMALLOC_NUMA(nvl->msix_bh_mutexes, sizeof(void *) * num_intr, nvl->numa_info.node_id);
     if (nvl->msix_bh_mutexes == NULL)
     {
         NV_DEV_PRINTF(NV_DBG_ERRORS, nv, "Failed to allocate MSI-X BH mutex array.\n");
@@ -122,7 +124,7 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
         }
     }
 
-    NV_KMALLOC(nvl->msix_entries, sizeof(struct msix_entry) * num_intr);
+    NV_KMALLOC_NUMA(nvl->msix_entries, sizeof(struct msix_entry) * num_intr, nvl->numa_info.node_id);
     if (nvl->msix_entries == NULL)
     {
         NV_DEV_PRINTF(NV_DBG_ERRORS, nv, "Failed to allocate MSI-X entries.\n");
@@ -134,7 +136,7 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
         msix_entries->entry = i;
     }
 
-    NV_KZALLOC(nvl->irq_count, sizeof(nv_irq_count_info_t) * num_intr);
+    NV_KZALLOC_NUMA(nvl->irq_count, sizeof(nv_irq_count_info_t) * num_intr, nvl->numa_info.node_id);
 
     if (nvl->irq_count == NULL)
     {
@@ -151,9 +153,8 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
 
     // Allocate IRQ-to-index mapping for O(1) lookup
     // This eliminates linear search in hot path by providing direct IRQ->index mapping
-    // Size is set to max possible IRQ number (typically 256-512 on modern systems)
-    // This is a small allocation (1-2KB) for significant performance gain
-    NV_KMALLOC(nvl->irq_to_index_map, sizeof(NvU16) * 512);
+    // Use NUMA-aware allocation for GPU-local memory
+    NV_KMALLOC_NUMA(nvl->irq_to_index_map, sizeof(NvU16) * 512, nvl->numa_info.node_id);
     if (nvl->irq_to_index_map == NULL)
     {
         NV_DEV_PRINTF(NV_DBG_ERRORS, nv, "Failed to allocate IRQ-to-index map.\n");

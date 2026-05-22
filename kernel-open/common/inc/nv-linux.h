@@ -447,6 +447,35 @@ static NvBool nv_numa_node_has_memory(int node_id)
         NV_MEMDBG_ADD(ptr, size);             \
     }
 
+/* NUMA-aware allocation macros for GPU-local memory allocation
+ * These allocate memory on the same NUMA node as the GPU for better
+ * memory locality and reduced latency on NUMA systems */
+#define NV_KMALLOC_NUMA(ptr, size, node_id) \
+    { \
+        if (nv_numa_node_has_memory(node_id)) \
+        { \
+            (ptr) = kmalloc_node(size, NV_GFP_KERNEL, node_id); \
+        } \
+        else \
+        { \
+            (ptr) = kmalloc(size, NV_GFP_KERNEL); \
+        } \
+        NV_MEMDBG_ADD(ptr, size);             \
+    }
+
+#define NV_KZALLOC_NUMA(ptr, size, node_id) \
+    { \
+        if (nv_numa_node_has_memory(node_id)) \
+        { \
+            (ptr) = kzalloc_node(size, NV_GFP_KERNEL, node_id); \
+        } \
+        else \
+        { \
+            (ptr) = kzalloc(size, NV_GFP_KERNEL); \
+        } \
+        NV_MEMDBG_ADD(ptr, size);             \
+    }
+
 #define NV_KFREE(ptr, size) \
     { \
         NV_MEMDBG_REMOVE(ptr, size); \

@@ -1088,7 +1088,8 @@ static void *nv_alloc_file_private(void)
 
     // Pre-allocate event pool (16 events per file descriptor)
     // This eliminates atomic allocations in the hot path
-    NV_KMALLOC(event_pool, 16 * sizeof(nvidia_event_t));
+    // Use NUMA_NO_NODE since nvl is not yet available at this point
+    NV_KMALLOC_NUMA(event_pool, 16 * sizeof(nvidia_event_t), NUMA_NO_NODE);
     if (event_pool != NULL)
     {
         // Link all pool events together
