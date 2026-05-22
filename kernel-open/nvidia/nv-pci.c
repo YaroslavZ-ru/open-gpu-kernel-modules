@@ -1674,34 +1674,8 @@ static void nv_init_dynamic_power_management
 
 static void nv_init_tegra_gpu_pg_mask(nvidia_stack_t *sp, struct pci_dev *pci_dev)
 {
-    nv_linux_state_t *nvl = pci_get_drvdata(pci_dev);
-    nv_state_t *nv = NV_STATE_PTR(nvl);
-    struct device_node *np = pci_dev->dev.of_node;
-    u32 gpu_pg_mask = 0;
-
-    /* Only continue with certain Tegra PCI iGPUs */
-    if (!nv->supports_tegra_igpu_rg)
-    {
-        return;
-    }
-
-    nv->tegra_pci_igpu_pg_mask = NV_TEGRA_PCI_IGPU_PG_MASK_DEFAULT;
-
-    of_property_read_u32(np, "nvidia,fuse-overrides", &gpu_pg_mask);
-    if (gpu_pg_mask != 0) {
-        nv_printf(NV_DBG_INFO,
-            "NVRM: nvidia,fuse-overrides parsed from device tree: 0x%x\n", gpu_pg_mask);
-        nv->tegra_pci_igpu_pg_mask = gpu_pg_mask;
-    }
-
-    nv_set_gpu_pg_mask(nv);
-
-    /*
-     * Trigger GPU reset to make new value of static TPC/GPC/FBP
-     * power-gating mask effective in BPMP-FW. Otherwise, the BPMP-FW
-     * may just save the mask in SW variable until next GPU reset.
-     */
-    nv_trigger_gpu_flr(nv);
+    /* Tegra support removed for bare-metal x86_64 optimization */
+    return;
 }
 
 static NvBool
