@@ -81,7 +81,7 @@ memmgrRegenerateFbRegionPriority_IMPL
     MemoryManager *pMemoryManager
 )
 {
-    NvU32   i, j, temp;
+    NvU32   i, j;
 
     // Re-build a list of allocatable regions, sorted by preference (highest to lowest)
     pMemoryManager->Ram.numFBRegionPriority = 0;
@@ -97,17 +97,22 @@ memmgrRegenerateFbRegionPriority_IMPL
     NV_ASSERT( pMemoryManager->Ram.numFBRegionPriority > 0 );
     if (pMemoryManager->Ram.numFBRegionPriority > 1)
     {
-        for (i = 0; i < pMemoryManager->Ram.numFBRegionPriority - 1; i++)
+        // Use insertion sort for better performance than bubble sort
+        // Insertion sort is O(n²) worst case but O(n) best case and more cache-friendly
+        for (i = 1; i < pMemoryManager->Ram.numFBRegionPriority; i++)
         {
-            for (j = i + 1; j < pMemoryManager->Ram.numFBRegionPriority; j++)
+            NvU32 key = pMemoryManager->Ram.fbRegionPriority[i];
+            NvU32 keyPerf = pMemoryManager->Ram.fbRegion[key].performance;
+            j = i - 1;
+            
+            // Shift elements greater than key one position to the right
+            while ((j >= 0) && 
+                   (pMemoryManager->Ram.fbRegion[pMemoryManager->Ram.fbRegionPriority[j]].performance < keyPerf))
             {
-                if (pMemoryManager->Ram.fbRegion[pMemoryManager->Ram.fbRegionPriority[i]].performance < pMemoryManager->Ram.fbRegion[pMemoryManager->Ram.fbRegionPriority[j]].performance)
-                {
-                    temp = pMemoryManager->Ram.fbRegionPriority[i];
-                    pMemoryManager->Ram.fbRegionPriority[i] = pMemoryManager->Ram.fbRegionPriority[j];
-                    pMemoryManager->Ram.fbRegionPriority[j] = temp;
-                }
+                pMemoryManager->Ram.fbRegionPriority[j + 1] = pMemoryManager->Ram.fbRegionPriority[j];
+                j--;
             }
+            pMemoryManager->Ram.fbRegionPriority[j + 1] = key;
         }
     }
 }

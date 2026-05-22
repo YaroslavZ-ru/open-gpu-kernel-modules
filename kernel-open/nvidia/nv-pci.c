@@ -78,6 +78,9 @@
 #include <linux/pci-ats.h>
 #endif
 
+/* DevFreq load statistics constants */
+#define NV_DEVFREQ_LOAD_PERCENTAGE_MAX 100
+
 extern int NVreg_GrdmaPciTopoCheckOverride;
 extern int NVreg_ExcludeAllGpus;
 
@@ -789,7 +792,7 @@ nv_pci_tegra_devfreq_get_dev_status(struct device *dev,
     //
     if (!pm_runtime_active(&pdev->dev))
     {
-        stat->total_time = 100;
+        stat->total_time = NV_DEVFREQ_LOAD_PERCENTAGE_MAX;
         stat->busy_time = 0;
         stat->current_frequency = tdev->devfreq->previous_freq;
         return 0;
@@ -811,12 +814,12 @@ nv_pci_tegra_devfreq_get_dev_status(struct device *dev,
     status = rm_pmu_perfmon_get_load(sp, nv, &load, tdev->devfreq_clk);
     if (status != NV_OK)
     {
-        load = 100;
+        load = NV_DEVFREQ_LOAD_PERCENTAGE_MAX;
     }
 
     // Load calculation equals to (busy_time / total_time) in devfreq governors
     // and devfreq governors expect total_time and busy_time in the same unit
-    stat->total_time = 100;
+    stat->total_time = NV_DEVFREQ_LOAD_PERCENTAGE_MAX;
     stat->busy_time = load;
     stat->current_frequency = clk_get_rate(tdev->clk);
 
