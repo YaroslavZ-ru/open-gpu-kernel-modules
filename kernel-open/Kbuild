@@ -95,17 +95,7 @@ ifneq ($(SYSSRCNVOOT),)
  KBUILD_EXTRA_SYMBOLS = $(SYSSRCNVOOT)/Module.symvers
 endif
 
-# Some Android kernels prohibit driver use of filesystem functions like
-# filp_open() and kernel_read(). Disable the NV_FILESYSTEM_ACCESS_AVAILABLE
-# functionality that uses those functions when building for Android.
-
-PLATFORM_IS_ANDROID ?= 0
-
-ifeq ($(PLATFORM_IS_ANDROID),1)
- ccflags-y += -DNV_FILESYSTEM_ACCESS_AVAILABLE=0
-else
- ccflags-y += -DNV_FILESYSTEM_ACCESS_AVAILABLE=1
-endif
+ccflags-y += -DNV_FILESYSTEM_ACCESS_AVAILABLE=1
 
 ccflags-y += -Wno-unused-function
 
