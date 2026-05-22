@@ -1073,6 +1073,8 @@ static void __exit nvidia_exit_module(void)
 static void *nv_alloc_file_private(void)
 {
     nv_linux_file_private_t *nvlfp;
+    nvidia_event_t *event_pool;
+    int i;
 
     NV_KZALLOC(nvlfp, sizeof(nv_linux_file_private_t));
     if (!nvlfp)
@@ -1084,6 +1086,18 @@ static void *nv_alloc_file_private(void)
     init_rwsem(&nvlfp->fileVaLock);
     nvlfp->file_mapping_list = NULL;
 
+    // Pre-allocate event pool (16 events per file descriptor)
+    // This eliminates atomic allocations in the hot path
+    NV_KMALLOC(event_pool, 16 * sizeof(nvidia_event_t));
+    if (event_pool != NULL)
+    {
+        // Link all pool events together
+        for (i = 0; i < 15; i++)
+            event_pool[i].next = &event_pool[i + 1];
+        event_pool[15].next = NULL;
+        nvlfp->event_pool_free = event_pool;
+    }
+
     return nvlfp;
 }
 
@@ -1094,10 +1108,21 @@ static void nv_free_file_private(nv_linux_file_private_t *nvlfp)
     if (nvlfp == NULL)
         return;
 
+    // Free event pool
+    if (nvlfp->event_pool_free != NULL)
+    {
+        // Find the start of the pool (walk back to first element)
+        nvidia_event_t *pool_start = nvlfp->event_pool_free;
+        // The pool is allocated as a single block, so we can free it directly
+        // by finding any element in the pool
+        NV_KFREE(pool_start, 16 * sizeof(nvidia_event_t));
+    }
+
+    // Free any remaining queued events (shouldn't happen in normal operation)
     for (nvet = nvlfp->event_data_head; nvet != NULL; nvet = nvlfp->event_data_head)
     {
         nvlfp->event_data_head = nvlfp->event_data_head->next;
-        NV_KFREE(nvet, sizeof(nvidia_event_t));
+        // Don't free - these came from the pool
     }
 
     while (nvlfp->file_mapping_list != NULL)
@@ -4095,7 +4120,18 @@ void NV_API_CALL nv_post_event(
 
     if (data_valid)
     {
-        NV_KMALLOC_ATOMIC(nvet, sizeof(nvidia_event_t));
+        // Try to allocate from pre-allocated pool first (fast path)
+        if (nvlfp->event_pool_free != NULL)
+        {
+            nvet = nvlfp->event_pool_free;
+            nvlfp->event_pool_free = nvet->next;
+        }
+        else
+        {
+            // Fallback: allocate atomically if pool is exhausted
+            NV_KMALLOC_ATOMIC(nvet, sizeof(nvidia_event_t));
+        }
+
         if (nvet == NULL)
         {
             NV_SPIN_UNLOCK_IRQRESTORE(&nvlfp->fp_lock, eflags);
@@ -4282,9 +4318,30 @@ int NV_API_CALL nv_get_event(
 
     *pending = (nvlfp->event_data_head != NULL);
 
-    NV_SPIN_UNLOCK_IRQRESTORE(&nvlfp->fp_lock, eflags);
+    // Return event to pool if pool is not full (max 16 events)
+    // Count free events in pool to avoid unbounded growth
+    {
+        nvidia_event_t *pool_check = nvlfp->event_pool_free;
+        int pool_count = 0;
+        while (pool_check != NULL && pool_count < 16)
+        {
+            pool_count++;
+            pool_check = pool_check->next;
+        }
+        
+        if (pool_count < 16)
+        {
+            nvet->next = nvlfp->event_pool_free;
+            nvlfp->event_pool_free = nvet;
+        }
+        else
+        {
+            // Pool is full, free the event
+            NV_KFREE(nvet, sizeof(nvidia_event_t));
+        }
+    }
 
-    NV_KFREE(nvet, sizeof(nvidia_event_t));
+    NV_SPIN_UNLOCK_IRQRESTORE(&nvlfp->fp_lock, eflags);
 
     return NV_OK;
 }

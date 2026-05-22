@@ -1487,6 +1487,7 @@ typedef struct
     nv_alloc_t *free_list;
     nv_linux_state_t *nvptr;
     nvidia_event_t *event_data_head, *event_data_tail;
+    nvidia_event_t *event_pool_free;  // Pre-allocated event pool for fast allocation
     NvBool dataless_event_pending;
     nv_spinlock_t fp_lock;
     wait_queue_head_t waitqueue;
