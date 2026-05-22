@@ -159,20 +159,8 @@ ifeq ($(TARGET_ARCH),x86_64)
   CFLAGS += -DNV_X86_64 -DNV_ARCH_BITS=64
 endif
 
-ifeq ($(TARGET_ARCH),armv7l)
-  CFLAGS += -DNV_ARMV7 -DNV_ARCH_BITS=32
-endif
-
 ifeq ($(TARGET_ARCH),aarch64)
   CFLAGS += -DNV_AARCH64 -DNV_ARCH_BITS=64
-endif
-
-ifeq ($(TARGET_ARCH),ppc64le)
-  CFLAGS += -DNV_PPC64LE -DNV_ARCH_BITS=64
-endif
-
-ifeq ($(TARGET_ARCH),riscv64)
-  CFLAGS += -DNV_RISCV64 -DNV_ARCH_BITS=64
 endif
 
 ifeq ($(TARGET_OS),Linux)
@@ -181,22 +169,8 @@ else
   LIBDL_LIBS =
 endif
 
-# This variable controls which floating-point ABI is targeted.  For ARM, it
-# defaults to "gnueabi" for softfp.  Another option is "gnueabihf" for
-# hard(fp).  This is necessary to pick up the correct rtld_test binary.
-# All other architectures default to empty.
-ifeq ($(TARGET_ARCH),armv7l)
-  TARGET_ARCH_ABI     ?= gnueabi
-endif
+# All architectures default to empty ABI
 TARGET_ARCH_ABI       ?=
-
-ifeq ($(TARGET_ARCH_ABI),gnueabi)
-  CFLAGS += -DNV_GNUEABI
-endif
-
-ifeq ($(TARGET_ARCH_ABI),gnueabihf)
-  CFLAGS += -DNV_GNUEABIHF
-endif
 
 OUTPUTDIR             ?= _out/$(TARGET_OS)_$(TARGET_ARCH)
 OUTPUTDIR_ABSOLUTE    ?= $(CURDIR)/$(OUTPUTDIR)
@@ -584,7 +558,6 @@ LD_TARGET_EMULATION_FLAG =
 LD_TARGET_EMULATION_FLAG_Linux_x86      = elf_i386
 LD_TARGET_EMULATION_FLAG_Linux_x86_64   = elf_x86_64
 LD_TARGET_EMULATION_FLAG_Linux_aarch64  = aarch64elf
-LD_TARGET_EMULATION_FLAG_Linux_ppc64le  = elf64lppc
 LD_TARGET_EMULATION_FLAG_SunOS_x86      = elf_i386_sol2
 LD_TARGET_EMULATION_FLAG_SunOS_x86_64   = elf_x86_64_sol2
 LD_TARGET_EMULATION_FLAG_FreeBSD_x86    = elf_i386_fbsd

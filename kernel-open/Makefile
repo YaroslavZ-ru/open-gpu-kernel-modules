@@ -75,7 +75,6 @@ else
   ifndef ARCH
     ARCH := $(shell uname -m | sed -e 's/i.86/i386/' \
       -e 's/aarch64/arm64/' \
-      -e 's/riscv64/riscv/' \
     )
   endif
 
@@ -84,7 +83,7 @@ else
   ifneq ($(filter $(ARCH),i386 x86_64),)
     KERNEL_ARCH = x86
   else
-    ifeq ($(filter $(ARCH),arm64 riscv),)
+    ifeq ($(filter $(ARCH),arm64),)
         $(error Unsupported architecture $(ARCH))
     endif
   endif
