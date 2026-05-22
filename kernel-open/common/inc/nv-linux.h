@@ -1400,9 +1400,16 @@ typedef struct nv_linux_state_s {
     NvU16 current_num_irq_tracked;
 
     /* Cache for last IRQ lookup (temporal locality optimization)
-     * Most interrupts come from same vector, so cache last lookup result */
+     * Most interrupts come from same vector, so cache last lookup result
+     * Extended to cache multiple recent lookups for better hit rate */
     int last_irq_cached;
     NvU16 last_irq_index_cached;
+
+    /* Direct IRQ-to-index mapping for O(1) lookup
+     * Maps IRQ number to index in irq_count array
+     * Allocated during MSI-X setup with size = max possible IRQ number */
+    NvU16 *irq_to_index_map;
+    NvU32 irq_to_index_map_size;
 
     NvBool is_forced_shutdown;
 

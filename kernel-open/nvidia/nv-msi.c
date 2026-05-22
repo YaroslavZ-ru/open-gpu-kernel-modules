@@ -148,6 +148,25 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
         nvl->last_irq_cached = -1;
         nvl->last_irq_index_cached = 0;
     }
+
+    // Allocate IRQ-to-index mapping for O(1) lookup
+    // This eliminates linear search in hot path by providing direct IRQ->index mapping
+    // Size is set to max possible IRQ number (typically 256-512 on modern systems)
+    // This is a small allocation (1-2KB) for significant performance gain
+    NV_KMALLOC(nvl->irq_to_index_map, sizeof(NvU16) * 512);
+    if (nvl->irq_to_index_map == NULL)
+    {
+        NV_DEV_PRINTF(NV_DBG_ERRORS, nv, "Failed to allocate IRQ-to-index map.\n");
+        goto failed;
+    }
+    nvl->irq_to_index_map_size = 512;
+    
+    // Initialize map with invalid entries (0xFFFF means not mapped)
+    for (i = 0; i < 512; i++)
+    {
+        nvl->irq_to_index_map[i] = 0xFFFF;
+    }
+
     rc = nv_pci_enable_msix(nvl, num_intr);
     if (rc != NV_OK)
         goto failed;
@@ -157,6 +176,13 @@ void NV_API_CALL nv_init_msix(nv_state_t *nv)
 
 failed:
     nv->flags &= ~NV_FLAG_USES_MSIX;
+
+    if (nvl->irq_to_index_map)
+    {
+        NV_KFREE(nvl->irq_to_index_map, sizeof(NvU16) * nvl->irq_to_index_map_size);
+        nvl->irq_to_index_map = NULL;
+        nvl->irq_to_index_map_size = 0;
+    }
 
     if (nvl->msix_bh_mutexes)
     {
@@ -218,6 +244,13 @@ NvS32 NV_API_CALL nv_request_msix_irq(nv_linux_state_t *nvl)
                 free_irq(nvl->msix_entries[j].vector, (void *)nvl);
             }
             break;
+        }
+
+        // Update IRQ-to-index map for O(1) lookup in ISR
+        // This allows direct mapping from IRQ number to index without linear search
+        if (msix_entries->vector < nvl->irq_to_index_map_size && nvl->irq_to_index_map)
+        {
+            nvl->irq_to_index_map[msix_entries->vector] = i;
         }
     }
 

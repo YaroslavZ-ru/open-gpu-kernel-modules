@@ -1614,6 +1614,14 @@ failed:
         nvl->msix_isr_locks = NULL;
         nvl->msix_isr_locks_count = 0;
 
+        // Clean up IRQ-to-index map
+        if (nvl->irq_to_index_map)
+        {
+            NV_KFREE(nvl->irq_to_index_map, sizeof(NvU16) * nvl->irq_to_index_map_size);
+            nvl->irq_to_index_map = NULL;
+            nvl->irq_to_index_map_size = 0;
+        }
+
         // Clean up per-vector BH mutexes
         if (nvl->msix_bh_mutexes)
         {
@@ -2078,6 +2086,14 @@ void nv_shutdown_adapter(nvidia_stack_t *sp,
         NV_KFREE(nvl->msix_isr_locks, nvl->num_intr*sizeof(nv_spinlock_t));
         nvl->msix_isr_locks = NULL;
         nvl->msix_isr_locks_count = 0;
+
+        // Clean up IRQ-to-index map
+        if (nvl->irq_to_index_map)
+        {
+            NV_KFREE(nvl->irq_to_index_map, sizeof(NvU16) * nvl->irq_to_index_map_size);
+            nvl->irq_to_index_map = NULL;
+            nvl->irq_to_index_map_size = 0;
+        }
 
         // Clean up per-vector BH mutexes
         if (nvl->msix_bh_mutexes)
@@ -3046,9 +3062,16 @@ nvidia_isr(
     {
         if (nvl->irq_count != NULL)
         {
-            // OPTIMIZATION: Check cache first (temporal locality)
-            // Most interrupts come from same vector, so cache hit is common
-            if (nvl->last_irq_cached == irq && nvl->last_irq_index_cached < nvl->current_num_irq_tracked)
+            // OPTIMIZATION: Use direct IRQ-to-index mapping for O(1) lookup
+            // This eliminates linear search in hot path
+            if (irq < nvl->irq_to_index_map_size && nvl->irq_to_index_map && 
+                nvl->irq_to_index_map[irq] != 0xFFFF)
+            {
+                index = nvl->irq_to_index_map[irq];
+                found_irq = NV_TRUE;
+            }
+            // Fallback: Check cache (temporal locality)
+            else if (nvl->last_irq_cached == irq && nvl->last_irq_index_cached < nvl->current_num_irq_tracked)
             {
                 index = nvl->last_irq_index_cached;
                 found_irq = NV_TRUE;
